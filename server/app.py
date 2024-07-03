@@ -58,7 +58,6 @@ class Register(Resource):
 
 api.add_resource(Register, '/register')
 
-
 class Login(Resource):
     def post(self):
         try:

@@ -21,7 +21,7 @@ const WeeklyCalendar = () => {
   const timecard = useSelector((state) => state.timecard.timecard);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  console.log("Timecard: ", timecard, <br />, "User: ", user);
+  console.log("User: ", timecard);
 
   const getWeekDates = () => {
     let weekStart = currentWeek.clone().startOf("week");

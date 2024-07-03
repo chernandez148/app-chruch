@@ -48,7 +48,7 @@ function TimesheetForm() {
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "https://21b0-162-233-243-193.ngrok-free.app/timesheet",
+          "https://a5d3-162-233-243-193.ngrok-free.app/timesheet",
           {
             method: "POST",
             headers: {
@@ -71,9 +71,9 @@ function TimesheetForm() {
         Alert.alert("Success", "Timesheet created successfully.");
         await AsyncStorage.setItem(
           "timecard",
-          JSON.stringify([...timecard, timecardData])
+          JSON.stringify([...user.timecards, timecardData])
         );
-        dispatch(setTimecard([...timecard, timecardData]));
+        dispatch(setTimecard([...user.timecards, timecardData]));
         dispatch(setTimesheetForm(false));
       } catch (error) {
         console.error("Error during timesheet creation:", error);

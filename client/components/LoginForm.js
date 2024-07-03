@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/user";
+import { setTimecard } from "../redux/slices/timecard";
 import {
   View,
   StyleSheet,
@@ -27,14 +28,14 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "john__doe@example.com",
+      password: "password123",
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "https://21b0-162-233-243-193.ngrok-free.app/login",
+          "https://a5d3-162-233-243-193.ngrok-free.app/login",
           {
             method: "POST",
             headers: {
@@ -51,8 +52,12 @@ const LoginForm = () => {
           await AsyncStorage.setItem("access_token", data.access_token);
           await AsyncStorage.setItem("refresh_token", data.refresh_token);
           await AsyncStorage.setItem("user", JSON.stringify(data.user));
-
+          await AsyncStorage.setItem(
+            "timecard",
+            JSON.stringify(data.user.timecards)
+          );
           dispatch(setUser(data.user));
+          dispatch(setTimecard(data.user.timecards));
         } else {
           Alert.alert("Login failed", data.message || "Login failed.");
         }

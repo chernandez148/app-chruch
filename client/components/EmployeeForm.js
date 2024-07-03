@@ -17,6 +17,8 @@ function EmployeeForm() {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
+  console.log(user.id);
+
   const validationSchema = yup.object().shape({
     first_name: yup.string().required(),
     last_name: yup.string().required(),
@@ -35,20 +37,22 @@ function EmployeeForm() {
       email: "",
       phone_number: "",
       _password_hash: "",
-      direct_supervisor_id: user.id,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "https://21b0-162-233-243-193.ngrok-free.app/register",
+          "https://a5d3-162-233-243-193.ngrok-free.app/register",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.access_token}`,
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify({
+              ...values, // assuming values is your existing object
+              direct_supervisor_id: user.id,
+            }),
           }
         );
         if (response.ok) {
@@ -138,21 +142,6 @@ function EmployeeForm() {
           />
           {formik.touched._password_hash && formik.errors._password_hash ? (
             <Text style={styles.error}>{formik.errors._password_hash}</Text>
-          ) : null}
-          <Picker style={styles.input}>
-            {user.subordinates.map((subordinate, index) => (
-              <Picker.Item
-                key={index}
-                label={`${subordinate.first_name} ${subordinate.last_name}`}
-                value={subordinate.id}
-              />
-            ))}
-          </Picker>
-          {formik.touched.direct_supervisor_id &&
-          formik.errors.direct_supervisor_id ? (
-            <Text style={styles.error}>
-              {formik.errors.direct_supervisor_id}
-            </Text>
           ) : null}
           <View style={styles.employeeFormBtns}>
             <TouchableOpacity onPress={formik.handleSubmit}>
