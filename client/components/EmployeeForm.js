@@ -40,6 +40,7 @@ function EmployeeForm() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      console.log(values);
       try {
         const response = await fetch(
           "https://a5d3-162-233-243-193.ngrok-free.app/register",
